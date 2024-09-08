@@ -76,11 +76,26 @@ export async function POST(req: Request) {
   }
 
   if (eventType === "user.deleted") {
-    await db.user.delete({
+    // Check if the user exists before attempting to delete
+    const user = await db.user.findUnique({
       where: {
         externalUserId: payload.data.id,
       },
     });
+
+    // If user exists, proceed with deletion
+    if (user) {
+      await db.user.delete({
+        where: {
+          externalUserId: payload.data.id,
+        },
+      });
+      console.log(`User with external ID ${payload.data.id} deleted`);
+    } else {
+      console.warn(
+        `User with external ID ${payload.data.id} not found, skipping deletion`
+      );
+    }
   }
 
   return new Response("", { status: 200 });
