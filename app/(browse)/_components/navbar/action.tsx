@@ -1,21 +1,24 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
-import { SignInButton, UserButton } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
+import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import { Clapperboard } from "lucide-react";
 import Link from "next/link";
 
-export const Action = async () => {
-  const user = await currentUser();
+export const Actions = () => {
+  const { user, isSignedIn } = useUser(); // Client-side hook to get user
+
   return (
     <div className="flex items-center justify-end gap-x-2 ml-4 lg:ml-0">
-      {!user && (
+      {!isSignedIn && (
         <SignInButton>
           <Button size="sm" variant="primary">
             Login
           </Button>
         </SignInButton>
       )}
-      {!!user && (
+
+      {isSignedIn && user && (
         <div className="flex items-center gap-x-4">
           <Button
             size="sm"
@@ -23,7 +26,7 @@ export const Action = async () => {
             className="text-muted-foreground hover:text-primary"
             asChild
           >
-            <Link href={`/u/${user.username}`}>
+            <Link href={`/u/${user.username || "profile"}`}>
               <Clapperboard className="h-5 w-5 lg:mr-2 " />
               <span className="hidden lg:block">Dashboard</span>
             </Link>

@@ -1,25 +1,25 @@
+import React from "react";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
+} from "@/components/ui/tooltip";
 
-interface HintProps {
+export function Hint({
+  children,
+  label,
+  side,
+  align,
+  asChild,
+}: {
   label: string;
   children: React.ReactNode;
   asChild?: boolean;
-  side?: "top" | "bottom" | "left" | "right";
+  side?: "left" | "right" | "top" | "bottom";
   align?: "start" | "center" | "end";
-}
-
-export const Hint = ({
-  label,
-  children,
-  asChild,
-  side = "top",
-  align,
-}: HintProps) => {
+}) {
   return (
     <TooltipProvider>
       <Tooltip delayDuration={0}>
@@ -29,9 +29,9 @@ export const Hint = ({
           side={side}
           align={align}
         >
-          {label}
+          <p className="font-semibold">{label}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
-};
+}

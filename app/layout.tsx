@@ -21,13 +21,13 @@ export default function RootLayout({
   return (
     <>
       <ClerkProvider>
-        <html lang="en">
-          <body className={inter.className}>
+        <html lang="en" suppressHydrationWarning={true}>
+          <body className={inter.className} suppressHydrationWarning={true}>
             <ThemeProvider
               attribute="class"
               defaultTheme="dark"
               enableSystem
-              disableTransitionOnChange
+              storageKey="gamehub-theme"
             >
               {children}
             </ThemeProvider>

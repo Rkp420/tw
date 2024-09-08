@@ -41,27 +41,22 @@ export const UserItem = ({ username, imageUrl, isLive }: UserItemProps) => {
             collapsed && "justify-center"
           )}
         >
-          <UserAvatar
-            username={username}
-            imageUrl={imageUrl}
-            isLive={isLive}
-            size="default"
-          />
+          <UserAvatar imageUrl={imageUrl} username={username} isLive={isLive} />
           {!collapsed && <p className="truncate">{username}</p>}
-          {!collapsed && <LiveBadge classname="ml-auto" />}
+          {!collapsed && isLive && <LiveBadge className="ml-auto" />}
         </div>
       </Link>
     </Button>
   );
 };
 
-export const UserSkeleton = () => {
+export function UserItemSkeleton() {
   return (
     <li className="flex items-center gap-x-4 px-3 py-2">
       <Skeleton className="min-h-[32px] min-w-[32px] rounded-full" />
       <div className="flex-1">
-      <Skeleton className="h-6" />
+        <Skeleton className="h-6" />
       </div>
     </li>
   );
-};
+}
